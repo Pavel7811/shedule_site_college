@@ -16,6 +16,7 @@
             <nav>
                 <ul>
                     <li><a href="index.php">Главная</a></li>
+                    <li><a href="teacher_schedule.php">Расписание по преподавателям</a></li>
                     <li><a href="admin/index.php">Административная панель</a></li>
                 </ul>
             </nav>

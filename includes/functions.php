@@ -160,3 +160,22 @@ function logout_admin() {
     // Завершаем сессию
     session_destroy();
 }
+
+function get_schedule_for_teacher($teacher_id) {
+    $db = get_db_connection();
+    $sql = "SELECT schedule.id, groups.name AS group_name, subjects.name AS subject_name, 
+            teachers.name AS teacher_name, classrooms.name AS classroom_name, 
+            schedule.day_of_week AS weekday, schedule.start_time AS start_time, schedule.end_time AS end_time 
+            FROM schedule 
+            JOIN groups ON schedule.group_id = groups.id 
+            JOIN subjects ON schedule.subject_id = subjects.id 
+            JOIN teachers ON schedule.teacher_id = teachers.id 
+            JOIN classrooms ON schedule.classroom_id = classrooms.id 
+            WHERE schedule.teacher_id = :teacher_id
+            ORDER BY schedule.day_of_week, schedule.start_time";
+    $stmt = $db->prepare($sql);
+    $stmt->execute([':teacher_id' => $teacher_id]);
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    return $result;
+}
+
